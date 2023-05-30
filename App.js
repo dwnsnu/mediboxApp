@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView, Button, Image } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 import { Camera } from 'expo-camera';
 import { shareAsync } from 'expo-sharing';
 import * as MediaLibrary from 'expo-media-library';
@@ -12,6 +13,7 @@ export default function App() {
   const [photo, setPhoto] = useState();
 
   useEffect(() => {
+
     (async () => {
       const cameraPermission = await Camera.requestCameraPermissionsAsync();
       const mediaLibraryPermission = await MediaLibrary.requestPermissionsAsync();
@@ -35,6 +37,20 @@ export default function App() {
 
     let newPhoto = await cameraRef.current.takePictureAsync(options);
     // console.log(newPhoto)
+
+    // (async () => {
+    //   const tmp = await axios.get('http://localhost:8000/docs/', {
+    //   })
+    //   console.log(tmp.status)
+    // })();
+
+    (async () => {
+      const tmp = await axios.post('http://localhost:8000/docs/', {'image': newPhoto,}, {
+        headers: { "Content-Type": `application/json`}
+      })
+      console.log(tmp.status)
+    })();
+
     setPhoto(newPhoto);
   };
 
