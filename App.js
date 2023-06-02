@@ -45,7 +45,7 @@ export default function App() {
     // })();
 
     (async () => {
-      const tmp = await axios.post('http://localhost:8000/docs/', {'image': newPhoto,}, {
+      const tmp = await axios.post('http://localhost:8000/docs/', {"image": newPhoto,}, {
         headers: { "Content-Type": `application/json`}
       })
       console.log(tmp.status)
